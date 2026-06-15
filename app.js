@@ -24,89 +24,78 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 document.getElementById("submitBtn").addEventListener("click", async () => {
-    const dateValue = document.getElementById("date").value;
-    if (!dateValue) {
-        alert("እባክዎ መጀመሪያ ቀን ይምረጡ!");
-        return;
-    }
+    try { await addDoc( collection ( db,"operation_handover_reports"),{
+        reportDate:Document.getElementById("ReportDate").value,
+        morningloading: document.getElementById("Morningloading_m").value,
+        eveningingloading: document.getElementById("eveningloading_m").value,
+        nightloading: document.getElementById("nightloading_m").value,
+        morningunitsOp: document.getElementById("morningunits_op").value,
+        eveningingunitsOp: document.getElementById("eveningunits_op").value,
+        nightunitsOp: document.getElementById("nightunits_op").value,
 
-    const reportData = {
-        date: dateValue,
-        createdAt: new Date(),
-        // Morning Data
-        morning: {
-            loading: document.getElementById("loading_m").value,
-            unitsOp: document.getElementById("units_op_m").value,
-            unitsMaint: document.getElementById("units_maint_m").value,
-            stoppedUnits: document.getElementById("stopped_m").value,
-            busbar: document.getElementById("busbar_m").value,
-            dgCondition: document.getElementById("dg_m").value,
-            dcCondition: document.getElementById("dc_m").value,
-            scada: document.getElementById("scada_m").value,
-            plc: document.getElementById("plc_m").value,
-            tools: document.getElementById("tools_m").value,
-            remarks: document.getElementById("remarks_m").value,
-            attendedBy: document.getElementById("attended_m").value,
-            group: document.getElementById("group_m").value,
-            addressedTo: document.getElementById("addressed_m").value
-        },
-        // Evening Data
-        evening: {
-            loading: document.getElementById("loading_e").value,
-            unitsOp: document.getElementById("units_op_e").value,
-            unitsMaint: document.getElementById("units_maint_e").value,
-            stoppedUnits: document.getElementById("stopped_e").value,
-            busbar: document.getElementById("busbar_e").value,
-            dgCondition: document.getElementById("dg_e").value,
-            dcCondition: document.getElementById("dc_e").value,
-            scada: document.getElementById("scada_e").value,
-            plc: document.getElementById("plc_e").value,
-            tools: document.getElementById("tools_e").value,
-            remarks: document.getElementById("remarks_e").value,
-            attendedBy: document.getElementById("attended_e").value,
-            group: document.getElementById("group_e").value,
-            addressedTo: document.getElementById("addressed_e").value
-        },
-        // Night Data
-        night: {
-            loading: document.getElementById("loading_n").value,
-            unitsOp: document.getElementById("units_op_n").value,
-            unitsMaint: document.getElementById("units_maint_n").value,
-            stoppedUnits: document.getElementById("stopped_n").value,
-            busbar: document.getElementById("busbar_n").value,
-            dgCondition: document.getElementById("dg_n").value,
-            dcCondition: document.getElementById("dc_n").value,
-            scada: document.getElementById("scada_n").value,
-            plc: document.getElementById("plc_n").value,
-            tools: document.getElementById("tools_n").value,
-            remarks: document.getElementById("remarks_n").value,
-            attendedBy: document.getElementById("attended_n").value,
-            group: document.getElementById("group_n").value,
-            addressedTo: document.getElementById("addressed_n").value
-        }
-    };
-    db.collection("fault_reports").add(reportData)
-    .then(() => {
-        alert("✅ Fault Report Submitted Successfully!");
-        document.getElementById('faultForm').reset();
-        window.location.href = "reports.html"; // ወደ ሪፖርት ማሳያ ገጽ ይወስደዋል
-    })
-    .catch((error) => {
-        console.error("Error adding document: ", error);
-        alert("❌ Error submitting report. Please try again.");
-    })
-    .finally(() => {
-        submitBtn.innerText = "Submit Fault Report";
-        submitBtn.disabled = false;
-    });
+           morningunitsMaint: document.getElementById("morningunits_maint").value,
+           eveningunitsMaint: document.getElementById("eveningunits_maint").value,
+           nightunitsMaint: document.getElementById("nightunits_maint").value,
 
+           morningstoppedUnits: document.getElementById("morningstopped").value,
+           eveningstoppedUnits: document.getElementById("eveningstopped").value,
+           nightstoppedUnits: document.getElementById("nightstopped").value,
 
-    try {
-        await addDoc(collection(db, "operation_handover_reports"), reportData);
-        alert("GIBE 3 Shift Handover Report Successfully Saved!");
-        window.location.reload();
-    } catch (error) {
-        console.error("Error saving document: ", error);
-        alert("ስህተት አጋጥሟል፣ እባክዎ እንደገና ይሞክሩ።");
-    }
-});
+            morningbusbar: document.getElementById("morningbusbar_m").value,
+            eveningningbusbar: document.getElementById("eveningbusbar_m").value,
+            nightbusbar: document.getElementById("nightbusbar_m").value,
+
+            morningdgCondition: document.getElementById("morningdg").value,
+            eveningdgCondition: document.getElementById("eveningdg").value,
+            nightdgCondition: document.getElementById("nightdg").value,
+
+            morningdcCondition: document.getElementById("morningdc").value,
+            eveningdcCondition: document.getElementById("eveningdc").value,
+            nightdcCondition: document.getElementById("nightdc").value,
+
+            morningscada: document.getElementById("morningscada").value,
+            eveningscada: document.getElementById("eveningscada").value,
+            nightscada: document.getElementById("nightscada").value,
+
+            morningplc: document.getElementById("morningplc").value,
+            eveningplc: document.getElementById("eveningplc").value,
+            nightplc: document.getElementById("nightplc").value,
+
+            morningtools: document.getElementById("morningtools").value,
+            eveningtools: document.getElementById("eveningtools").value,
+            nighttools: document.getElementById("nighttools").value,
+
+            morningremarks: document.getElementById("morningremarks").value,
+            eveningremarks: document.getElementById("eveningremarks").value,
+            nightremarks: document.getElementById("nightremarks").value,
+
+            attendedBy: document.getElementById("attendedby").value,
+            groupname: document.getElementById("groupname").value,
+            sign: document.getElementById("sign").value,
+            
+            addressedTo: document.getElementById("addressedTo").value,
+            addressedgroup: document.getElementById("addressedgroup").value,
+            addressedsign: document.getElementById("addressedsign").value,
+          
+            attendedBy: document.getElementById("attendedby").value,
+            groupname: document.getElementById("groupname").value,
+            sign: document.getElementById("sign").value,
+            
+            addressedTo: document.getElementById("addressedTo").value,
+            addressedgroup: document.getElementById("addressedgroup").value,
+            addressedsign: document.getElementById("addressedsign").value,
+            
+            attendedBy: document.getElementById("attendedby").value,
+            groupname: document.getElementById("groupname").value,
+            sign: document.getElementById("sign").value,
+            
+            addressedTo: document.getElementById("addressedTo").value,
+            addressedgroup: document.getElementById("addressedgroup").value,
+            addressedsign: document.getElementById("addressedsign").value,
+            createdAt: new Date()});
+            alert("Operation handover report saved successfully");}
+            catch(error){ console.error(error);
+                alert("error saving report");
+            }});
+            
+            
